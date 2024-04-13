@@ -42,3 +42,9 @@ register_activation_hook(WCBWL_FILE, array('WCBWL', 'install'));
 function wcbwl_can_run() {
 	return class_exists('WooCommerce') && version_compare(WC()->version, WCBWL_MIN_WC_VERSION, '>=');
 }
+
+add_action( 'before_woocommerce_init', function() {
+	if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+	}
+} );
